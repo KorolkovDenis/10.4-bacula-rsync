@@ -63,11 +63,112 @@
 
 Ответ:
 
-![screen1](https://github.com/KorolkovDenis/)
-![screen1](https://github.com/KorolkovDenis/)
-![screen1](https://github.com/KorolkovDenis/)
-![screen1](https://github.com/KorolkovDenis/)
-![screen1](https://github.com/KorolkovDenis/)
+сервер: /etc/rsyncd.conf
+
+```
+pid file = /var/run/rsyncd.pid
+log file = /var/log/rsyncd.log
+transfer logging = true
+munge symlinks = yes
+[data]
+path = /root/
+uid = root
+read only =yes
+list = yes
+comment = Data backup Dir ][a][a][a
+auth users = backup
+secrets file = /etc/rsyncd.scrt
+[new]
+path = /etc/
+uid = root
+read only = yes
+list = yes
+comment = System fileset
+auth users = backup
+secrets file = /etc/rsyncd.scrt
+```
+
+/root/scripts/backup-node1.sh
+```
+#!/bin/bash
+date
+# Папка, куда будем складывать архивы — ее либо сразу создать либо не создавать а положить в уже существующие
+syst_dir=/backup/
+                                        # Имя сервера, который архивируем
+srv_name=node2                   #из тестовой конфигурации
+                                        # Адрес сервера, который архивируем
+srv_ip=192.168.1.216
+# Пользователь rsync на сервере, который архивируем
+srv_user=backup
+# Ресурс на сервере для бэкапа
+srv_dir=data
+echo "Start backup ${srv_name}"
+# Создаем папку для инкрементных бэкапов
+mkdir -p ${syst_dir}${srv_name}/increment/
+/usr/bin/rsync -avz --progress --delete --password-file=/etc/rsyncd.scrt ${srv_user}@${srv_ip}::${srv_dir}
+${syst_dir}${srv_name}/current/ --backup --backup-dir=${syst_dir}${srv_name}/increment/`date +%Y-%m-%d`/
+/usr/bin/find ${syst_dir}${srv_name}/increment/ -maxdepth 1 -type d
+-mtime +30 -exec rm -rf {} \;
+date
+echo "Finish backup ${srv_name}"
+```
+
+клиент: /etc/rsyncd.conf
+
+```
+pid file = /var/run/rsyncd.pid
+log file = /var/log/rsyncd.log
+transfer logging = true
+munge symlinks = yes
+[data]
+path = /etc/
+uid = root
+read only =yes
+list = yes
+comment = Data backup Dir ][a][a][a
+auth users = backup
+secrets file = /etc/rsyncd.scrt
+[new]
+path = /etc/
+uid = root
+read only = yes
+list = yes
+comment = System fileset
+auth users = backup
+secrets file = /etc/rsyncd.scrt
+```
+
+/root/scripts/backup-node1.sh
+
+```
+#!/bin/bash
+date
+# Папка, куда будем складывать архивы — ее либо сразу создать либо не создавать а положить в уже существующие
+syst_dir=/backup/
+                                        # Имя сервера, который архивируем
+srv_name=clear                   #из тестовой конфигурации
+                                        # Адрес сервера, который архивируем
+srv_ip=192.168.1.100
+# Пользователь rsync на сервере, который архивируем
+srv_user=backup
+# Ресурс на сервере для бэкапа
+srv_dir=data
+echo "Start backup ${srv_name}"
+# Создаем папку для инкрементных бэкапов
+mkdir -p ${syst_dir}${srv_name}/increment/
+/usr/bin/rsync -avz --progress --delete --password-file=/etc/rsyncd.scrt ${srv_user}@${srv_ip}::${srv_dir}
+${syst_dir}${srv_name}/current/ --backup --backup-dir=${syst_dir}${srv_name}/increment/`date +%Y-%m-%d`/
+/usr/bin/find ${syst_dir}${srv_name}/increment/ -maxdepth 1 -type d
+-mtime +30 -exec rm -rf {} \;
+date
+echo "Finish backup ${srv_name}"
+```
+
+Итог запуска с сервера:
+
+![screen4](https://github.com/KorolkovDenis/10.4-bacula-rsync/blob/main/screenshots/screen4.jpg)
+![screen5](https://github.com/KorolkovDenis/10.4-bacula-rsync/blob/main/screenshots/screen5.jpg)
+
 
 ---
 
@@ -85,4 +186,4 @@
 
 ## Моя работа в Google:
 
-[Моя работа по Резервному копированию. Bacula-Rsync.](https://docs.google.com/)
+[Моя работа по Резервному копированию. Bacula-Rsync.](https://docs.google.com/document/d/1z8p_pjVZVZo2qWvjZlIl89ogZE8y2k6c/edit?usp=share_link&ouid=104113173630640462528&rtpof=true&sd=true)
