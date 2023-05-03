@@ -42,6 +42,17 @@
 *- конфигурационные файлы для bacula-dir, bacula-sd,  bacula-fd,*   
 *- скриншот, подтверждающий успешное прохождение резервного копирования.*
 
+Ответ:
+
+Конфигурацтонные файлы лежат в репозитории.
+
+![screen1](https://github.com/KorolkovDenis/)
+![screen2](https://github.com/KorolkovDenis/)
+
+В директории /backup появился наш бэкап-файл
+
+![screen3](https://github.com/KorolkovDenis/)
+
 ---
 
 ### Задание 3
@@ -49,6 +60,14 @@
 Установите программное обеспечении Rsync. Настройте синхронизацию на двух нодах. Протестируйте работу сервиса.
 
 *Пришлите рабочую конфигурацию сервера и клиента Rsync блоком кода в вашем md-файле.*
+
+Ответ:
+
+![screen1](https://github.com/KorolkovDenis/)
+![screen1](https://github.com/KorolkovDenis/)
+![screen1](https://github.com/KorolkovDenis/)
+![screen1](https://github.com/KorolkovDenis/)
+![screen1](https://github.com/KorolkovDenis/)
 
 ---
 
