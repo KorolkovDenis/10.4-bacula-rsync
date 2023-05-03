@@ -46,12 +46,12 @@
 
 Конфигурацтонные файлы лежат в репозитории.
 
-![screen1](https://github.com/KorolkovDenis/)
-![screen2](https://github.com/KorolkovDenis/)
+![screen1](https://github.com/KorolkovDenis/10.4-bacula-rsync/blob/main/screenshots/screen1.jpg)
+![screen2](https://github.com/KorolkovDenis/10.4-bacula-rsync/blob/main/screenshots/screen2.jpg)
 
 В директории /backup появился наш бэкап-файл
 
-![screen3](https://github.com/KorolkovDenis/)
+![screen3](https://github.com/KorolkovDenis/10.4-bacula-rsync/blob/main/screenshots/screen3.jpg)
 
 ---
 
